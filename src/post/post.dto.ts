@@ -1,4 +1,4 @@
-export interface PostDto {
+export class PostDto {
     id: string // ID único do post
     userId: string // ID do usuário que fez o post
     content: string // Conteúdo do post (texto)
@@ -7,4 +7,9 @@ export interface PostDto {
     retweetsCount: number // Número de retweets
     repliesCount: number // Número de respostas
     mediaUrls?: string[] // URLs de mídia (opcional)
+}
+
+export interface FindAllParametersDto {
+    userId: string
+    content: string
 }

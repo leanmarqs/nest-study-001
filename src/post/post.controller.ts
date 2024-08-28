@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
-import { PostDto } from './post.dto'
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    Query,
+} from '@nestjs/common'
+import { FindAllParametersDto, PostDto } from './post.dto'
 import { PostService } from './post.service'
 
 @Controller('post')
@@ -7,8 +16,7 @@ export class PostController {
     constructor(private readonly postService: PostService) {}
     @Post()
     createPost(@Body() post: PostDto): PostDto {
-        this.postService.createPost(post)
-        return post
+        return this.postService.createPost(post)
     }
 
     @Get('/:id')
@@ -16,8 +24,19 @@ export class PostController {
         return this.postService.findPostById(id)
     }
 
+    @Get()
+    findAllPosts(@Query() params: FindAllParametersDto): PostDto[] {
+        return this.postService.findAllPosts(params)
+    }
+
     @Put()
     updatePost(@Body() post: PostDto) {
-        this.postService.updatePost(post)
+        return this.postService.updatePost(post)
+    }
+
+    @Delete('/:id')
+    deletePost(@Param('id') id: string) {
+        this.postService.deletePost(id)
+        return { message: 'Post successfully deleted.' }
     }
 }
